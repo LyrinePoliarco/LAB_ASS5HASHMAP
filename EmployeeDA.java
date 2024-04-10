@@ -1,5 +1,5 @@
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -7,24 +7,23 @@ import java.util.Scanner;
 public class EmployeeDA {
     private Map<String, Employee> employeeMap;
 
-    public EmployeeDA(String employeeFile) throws FileNotFoundException {
+    public EmployeeDA(String empFile) throws FileNotFoundException {
         this.employeeMap = new HashMap<>();
-        loadEmployees(employeeFile);
+        loadEmployees(empFile);
     }
 
-    private void loadEmployees(String employeeFile) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File("emp.csv"));
-        while (scanner.hasNextLine()) {
-            String[] fields = scanner.nextLine().split(",");
-            String empNo = fields[0].trim();
-            String lastName = fields[1].trim();
-            String firstName = fields[2].trim();
-            String job = fields[3].trim();
-            double salary = Double.parseDouble(fields[4].trim());
-            Employee employee = new Employee(empNo, lastName, firstName, job, salary);
-            employeeMap.put(empNo, employee);
+    private void loadEmployees(String empFile) throws FileNotFoundException {
+        try (Scanner file = new Scanner(new FileReader(empFile))) {
+            file.nextLine(); // Skip header
+            while (file.hasNextLine()) {
+                String[] lineArray = file.nextLine().split(",");
+                String empNo = lineArray[0].trim();
+                String lastName = lineArray[1].trim();
+                String firstName = lineArray[2].trim();
+                double salary = Double.parseDouble(lineArray[3].trim());
+                employeeMap.put(empNo, new Employee(empNo, lastName, firstName, salary));
+            }
         }
-        scanner.close();
     }
 
     public Map<String, Employee> getEmployeeMap() {

@@ -1,47 +1,59 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Department {
-    private String deptCode;
-    private String deptName;
+    private String code;
+    private String name;
     private String location;
-    private double depTotalSalary;
-    private Map<String, Employee> employeeMap;
+    private List<Employee> employees = new ArrayList<>();
+    private double totalSalary;
 
-    public Department(String deptCode, String deptName, String location) {
-        this.deptCode = deptCode;
-        this.deptName = deptName;
+    public Department(String code, String name, String location) {
+        this.code = code;
+        this.name = name;
         this.location = location;
-        this.depTotalSalary = 0.0;
-        this.employeeMap = new HashMap<>();
     }
 
-    public String getDeptCode() {
-        return deptCode;
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
+        totalSalary += employee.getSalary();
     }
 
-    public String getDeptName() {
-        return deptName;
+    public String getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public double getDepTotalSalary() {
-        return depTotalSalary;
+    public List<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setDepTotalSalary(double depTotalSalary) {
-        this.depTotalSalary = depTotalSalary;
+    public double getTotalSalary() {
+        return totalSalary;
     }
 
-    public Map<String, Employee> getEmployeeMap() {
-        return employeeMap;
+    public void setTotalSalary(double totalSalary) {
+        this.totalSalary = totalSalary;
     }
 
-    public void addEmployee(Employee employee) {
-        employeeMap.put(employee.getEmpNo(), employee);
-        depTotalSalary += employee.getSalary();
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Department code: ").append(code).append("\n");
+        builder.append("Department name: ").append(name).append("\n");
+        builder.append("Department total salary: ").append(String.format("%.2f", totalSalary)).append("\n");
+        builder.append("---------------------Details -------------------------\n");
+        builder.append("EmpNo\t\tEmployee Name\tSalary\n");
+        for (Employee emp : employees) {
+            builder.append(emp.getEmpNo()).append("\t\t").append(emp.getLastName()).append(", ").append(emp.getFirstName()).append("\t").append(String.format("%.2f", emp.getSalary())).append("\n");
+        }
+        return builder.toString();
     }
 }
