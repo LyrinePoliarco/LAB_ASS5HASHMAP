@@ -15,10 +15,12 @@ public class Department {
     }
 
     public void addEmployee(Employee employee) {
-        employees.add(employee);
-        totalSalary += employee.getSalary();
+        if (employee != null) {
+            employees.add(employee);
+            totalSalary += employee.getSalary(); // Siguraduhing hindi null ang employee bago gamitin ang getSalary() method
+        }
     }
-
+    
     public String getCode() {
         return code;
     }
@@ -43,17 +45,4 @@ public class Department {
         this.totalSalary = totalSalary;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Department code: ").append(code).append("\n");
-        builder.append("Department name: ").append(name).append("\n");
-        builder.append("Department total salary: ").append(String.format("%.2f", totalSalary)).append("\n");
-        builder.append("---------------------Details -------------------------\n");
-        builder.append("EmpNo\t\tEmployee Name\tSalary\n");
-        for (Employee emp : employees) {
-            builder.append(emp.getEmpNo()).append("\t\t").append(emp.getLastName()).append(", ").append(emp.getFirstName()).append("\t").append(String.format("%.2f", emp.getSalary())).append("\n");
-        }
-        return builder.toString();
-    }
 }

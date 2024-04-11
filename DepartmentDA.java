@@ -1,51 +1,53 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class DepartmentDA {
-    private Map<String, Department> departmentMap;
+    private HashMap<String, Department> departmentMap;
 
-    public DepartmentDA(String depFile, String empFile) throws FileNotFoundException {
-        this.departmentMap = new HashMap<>();
-        loadDepartments(depFile);
-        loadEmployees(empFile);
+    public DepartmentDA() throws FileNotFoundException {
+        departmentMap = new HashMap<>();
+        loadDepartments("dep.csv", "deptemp.csv");
     }
 
-   private void loadDepartments(String depFile) throws FileNotFoundException {
-    try (Scanner file = new Scanner(new FileReader(depFile))) {
-        while (file.hasNextLine()) {
-            String[] lineArray = file.nextLine().split(",");
-            if (lineArray.length == 3) { // Tiyakin na tama ang bilang ng mga bahagi ng bawat linya
-                String code = lineArray[0].trim();
-                String name = lineArray[1].trim();
+    private void loadDepartments(String depFile, String salaryFile) throws FileNotFoundException {
+        // Load department data
+        Scanner deptScanner = new Scanner(new FileReader(depFile));
+        deptScanner.nextLine(); // Skip header
+        while (deptScanner.hasNextLine()) {
+            String rawLine = deptScanner.nextLine();
+            String[] lineArray = rawLine.split(",");
+            if (lineArray.length == 3) {
+                String depCode = lineArray[0].trim();
+                String depName = lineArray[1].trim();
                 String location = lineArray[2].trim();
-                departmentMap.put(code, new Department(code, name, location));
-            } else {
-                System.out.println("Invalid line format: " + Arrays.toString(lineArray));
+                Department department = new Department(depCode, depName, location);
+                departmentMap.put(depCode, department);
             }
         }
-    }
-}
+        deptScanner.close();
 
-    private void loadEmployees(String empFile) throws FileNotFoundException {
-        EmployeeDA employeeDA = new EmployeeDA(empFile);
-        Map<String, Employee> employeeMap = employeeDA.getEmployeeMap();
-
-        try (Scanner file = new Scanner(new FileReader(empFile))) {
-            file.nextLine(); // Skip header
-            while (file.hasNextLine()) {
-                String[] lineArray = file.nextLine().split(",");
+        // Associate employees with departments
+        Scanner salaryScanner = new Scanner(new FileReader(salaryFile));
+        salaryScanner.nextLine(); // Skip header
+        while (salaryScanner.hasNextLine()) {
+            String rawLine = salaryScanner.nextLine();
+            String[] lineArray = rawLine.split(",");
+            if (lineArray.length == 3) {
                 String deptCode = lineArray[0].trim();
                 String empNo = lineArray[1].trim();
-                departmentMap.get(deptCode).addEmployee(employeeMap.get(empNo));
+                double salary = Double.parseDouble(lineArray[2].trim()); // Assuming salary is in the third element
+                Employee employee = new Employee(empNo, "", "", salary); // Create temporary Employee object with salary only
+                Department department = departmentMap.get(deptCode);
+                if (department != null) {
+                    department.addEmployee(employee);
+                }
             }
         }
+        salaryScanner.close();
     }
 
-    public Map<String, Department> getDepartmentMap() {
+    public HashMap<String, Department> getDepartmentMap() {
         return departmentMap;
     }
 }

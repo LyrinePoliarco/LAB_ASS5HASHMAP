@@ -26,4 +26,9 @@ public class Employee {
     public double getSalary() {
         return salary;
     }
+
+    public void setSalary(double salary) {
+
+        throw new UnsupportedOperationException("Unimplemented method 'setSalary'");
+    }
 }
