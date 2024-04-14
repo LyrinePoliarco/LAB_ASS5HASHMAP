@@ -2,12 +2,21 @@ public class Employee {
     private String empNo;
     private String lastName;
     private String firstName;
-    private double salary;
+    private Double salary;
 
-    public Employee(String empNo, String lastName, String firstName, double salary) {
+    public void setEmpNo(String empNo) {
         this.empNo = empNo;
+    }
+
+    public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public void setSalary(Double salary) {
         this.salary = salary;
     }
 
@@ -23,12 +32,7 @@ public class Employee {
         return firstName;
     }
 
-    public double getSalary() {
+    public Double getSalary() {
         return salary;
-    }
-
-    public void setSalary(double salary) {
-
-        throw new UnsupportedOperationException("Unimplemented method 'setSalary'");
     }
 }

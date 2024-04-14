@@ -1,48 +1,40 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Department {
-    private String code;
-    private String name;
-    private String location;
-    private List<Employee> employees = new ArrayList<>();
-    private double totalSalary;
+    private String depCode;
+    private String depName;
+    private Double depTotalSalary = 0.00;
+    private HashMap<String, Employee> empMap;
 
-    public Department(String code, String name, String location) {
-        this.code = code;
-        this.name = name;
-        this.location = location;
+    public void setDepCode(String depCode) {
+        this.depCode = depCode;
     }
 
-    public void addEmployee(Employee employee) {
-        if (employee != null) {
-            employees.add(employee);
-            totalSalary += employee.getSalary(); // Siguraduhing hindi null ang employee bago gamitin ang getSalary() method
-        }
-    }
-    
-    public String getCode() {
-        return code;
+    public void setDepName(String depName) {
+        this.depName = depName;
     }
 
-    public String getName() {
-        return name;
+    public void setDepTotalSalary(Double depTotalSalary) {
+        this.depTotalSalary += depTotalSalary;
     }
 
-    public String getLocation() {
-        return location;
+    public void setEmpMap(HashMap<String, Employee> empMap) {
+        this.empMap = empMap;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
+    public String getDepCode() {
+        return depCode;
     }
 
-    public double getTotalSalary() {
-        return totalSalary;
+    public String getDepName() {
+        return depName;
     }
 
-    public void setTotalSalary(double totalSalary) {
-        this.totalSalary = totalSalary;
+    public Double getDepTotalSalary() {
+        return depTotalSalary;
     }
 
+    public HashMap<String, Employee> getEmpMap() {
+        return empMap;
+    }
 }
