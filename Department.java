@@ -1,40 +1,49 @@
 import java.util.HashMap;
 
-public class Department {
+public class Department 
+{
     private String depCode;
     private String depName;
     private Double depTotalSalary = 0.00;
     private HashMap<String, Employee> empMap;
 
-    public void setDepCode(String depCode) {
+    public void setDepCode(String depCode) 
+    {
         this.depCode = depCode;
     }
 
-    public void setDepName(String depName) {
+    public void setDepName(String depName) 
+    {
         this.depName = depName;
     }
 
-    public void setDepTotalSalary(Double depTotalSalary) {
+    public void setDepTotalSalary(Double depTotalSalary) 
+    {
         this.depTotalSalary += depTotalSalary;
     }
 
-    public void setEmpMap(HashMap<String, Employee> empMap) {
+    public void setEmpMap(HashMap<String, Employee> empMap) 
+    {
         this.empMap = empMap;
     }
 
-    public String getDepCode() {
+    public String getDepCode() 
+    {
         return depCode;
     }
 
-    public String getDepName() {
+    public String getDepName() 
+    {
         return depName;
     }
 
-    public Double getDepTotalSalary() {
+    public Double getDepTotalSalary() 
+    {
         return depTotalSalary;
     }
 
-    public HashMap<String, Employee> getEmpMap() {
+    public HashMap<String, Employee> getEmpMap() 
+    {
         return empMap;
     }
 }
