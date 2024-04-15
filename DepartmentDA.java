@@ -82,5 +82,7 @@ public class DepartmentDA {
             System.out.printf("%-10s %-20s %10s\n", entryMap.getKey(),
             employee.getLastName() + ", " + employee.getFirstName(), df.format(employee.getSalary()));
         }
+        System.out.println();
+        System.out.println();
     }
 }
